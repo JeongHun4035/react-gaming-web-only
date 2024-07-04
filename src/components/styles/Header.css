@@ -1,0 +1,44 @@
+.header-wrapper {
+  height: 52px;
+  background-color: #212226;
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.side-controller {
+  padding: 4px;
+  margin-left: 10px;
+}
+
+.side-controller:hover {
+  cursor: pointer;
+  color: #81c784;
+}
+
+.preferences-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 4px;
+  gap: 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.preferences-item {
+  align-items: center;
+}
+
+.preferences-item:hover {
+  cursor: pointer;
+  color: #81c784;
+}
+
+.preferences-item span {
+  font-size: 12px;
+}
+
+
