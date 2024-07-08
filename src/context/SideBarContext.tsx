@@ -7,6 +7,7 @@ interface SideBarContextType {
 
 const SideBarContext = createContext<SideBarContextType | undefined>(undefined)
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSideBarContext = () => {
   const context = useContext(SideBarContext)
   if (!context) {

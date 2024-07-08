@@ -1,5 +1,5 @@
 export interface ITreeItem {
-  parentId: string
+  parentId: string | null
   id: string
   name: string
 }

@@ -1,11 +1,12 @@
+import { Outlet } from "react-router-dom"
+
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import SideBar from "@/components/SideBar"
 import { SideBarProvider } from "@/context/SideBarContext"
-
 import "@/components/Layouts/index.css"
 
-const Layout = (props: { children: React.ReactNode }) => {
+const Layout = () => {
   return (
     <SideBarProvider>
       <div className="layout-wrapper">
@@ -15,7 +16,9 @@ const Layout = (props: { children: React.ReactNode }) => {
         <aside>
           <SideBar />
         </aside>
-        <main>{props.children}</main>
+        <main>
+          <Outlet />
+        </main>
         <footer>
           <Footer />
         </footer>

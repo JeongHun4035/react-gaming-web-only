@@ -11,6 +11,8 @@ const TreeContainer = styled.ul<{ direction: "row" | "column" }>`
   display: flex;
   flex-direction: ${(props) => props.direction};
   justify-content: space-around;
+  background-color: #212226;
+  border-radius: 0.7rem;
 `
 
 const TreeItem = styled.li`
@@ -19,16 +21,18 @@ const TreeItem = styled.li`
   position: relative;
 `
 
-const TreeItemContent = styled.div<{ $isOpen: boolean }>`
+const TreeItemContent = styled.div`
   display: flex;
   align-items: center;
   white-space: nowrap;
-
+  gap: 10px;
   &::before {
-    content: "${(props) => (props.$isOpen ? "▾" : "▸")}";
     display: inline-block;
     margin-right: 5px;
+  }
+  &:hover {
     cursor: pointer;
+    color: #81c784;
   }
 `
 
@@ -48,9 +52,11 @@ const SubTreeContainer = styled.ul<{
 const CustomTree: React.FC<{
   data: ITreeItem[]
   direction?: "row" | "column"
-}> = ({ data, direction = "column" }) => {
+  // eslint-disable-next-line no-unused-vars
+  onRowClick?: (id: ITreeItem) => void
+}> = ({ data, direction = "column", onRowClick }) => {
   const [openNodes, setOpenNodes] = useState<Set<string>>(new Set())
-  const handleToggle = (id: string) => {
+  const rowToggleEvent = (id: string) => {
     setOpenNodes((prev) => {
       const newSet = new Set(prev)
       if (newSet.has(id)) {
@@ -62,20 +68,37 @@ const CustomTree: React.FC<{
     })
   }
 
+  const rowClickEvent = (item: ITreeItem) => {
+    if (onRowClick) {
+      onRowClick(item)
+    }
+  }
+
   const renderTree = (nodes: ITreeItem[]) => {
     return (
       <TreeContainer direction={direction}>
         {nodes.map((node) => {
           const isOpen = openNodes.has(node.id)
           const children = data.filter((child) => child.parentId === node.id)
-
           return (
             <TreeItem key={node.id}>
               <TreeItemContent
-                $isOpen={isOpen}
-                onClick={() => children.length > 0 && handleToggle(node.id)}
+                onClick={() => {
+                  rowToggleEvent(node.id)
+                  rowClickEvent(node)
+                }}
               >
-                {node.name}
+                {node.parentId === null ? (
+                  <h3>
+                    {node.name}
+                    {children.length > 0 && ` (${children.length}) `}
+                  </h3>
+                ) : (
+                  <span>
+                    {node.name}
+                    {children.length > 0 && ` (${children.length}) `}
+                  </span>
+                )}
               </TreeItemContent>
               {children.length > 0 && (
                 <SubTreeContainer $isOpen={isOpen} direction={direction}>
@@ -89,7 +112,7 @@ const CustomTree: React.FC<{
     )
   }
 
-  const roots = data.filter((node) => node.parentId === "#")
+  const roots = data.filter((node) => node.parentId === null)
   return <div>{renderTree(roots)}</div>
 }
 

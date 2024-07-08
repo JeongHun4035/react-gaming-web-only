@@ -1,8 +1,8 @@
 import "@/components/styles/Header.css"
 
 import { FiSettings } from "react-icons/fi"
-import { HiOutlineMenu } from "react-icons/hi"
 import { HiMiniBellAlert } from "react-icons/hi2"
+import { IoGameController } from "react-icons/io5"
 import { RiUser5Fill } from "react-icons/ri"
 
 import { useSideBarContext } from "@/context/SideBarContext"
@@ -11,7 +11,7 @@ const SideController = () => {
   const { toggleSideBar } = useSideBarContext()
   return (
     <div className="side-controller" onClick={toggleSideBar}>
-      <HiOutlineMenu />
+      <IoGameController />
     </div>
   )
 }
